@@ -1,22 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Card = ({ nameCity, weatherState, icon, temperature }) => {
+const Card = ({ infoCity }) => {
+  const { nameCity, weatherState, temperature, icon } = infoCity;
   return (
     <li>
       <h3>{nameCity}</h3>
       <p>{weatherState}</p>
-      <img src={icon} alt={weatherState} />
+      <img
+        src={`https://www.metaweather.com/static/img/weather/${icon}.svg`}
+        alt={weatherState}
+      />
       <p>{temperature}</p>
     </li>
   );
 };
 
+Card.defaultProps = {
+  infoCity: {}
+};
+
 Card.propTypes = {
-  nameCity: PropTypes.string,
-  weatherState: PropTypes.string,
-  icon: PropTypes.string,
-  temperature: PropTypes.string
+  infoCity: PropTypes.obj
 };
 
 export default Card;

@@ -3,9 +3,12 @@ import Card from "./Card";
 
 class Cards extends Component {
   render() {
+    const { cities } = this.props;
     return (
       <ul>
-        <Card nameCity="Nombre de la ciudad" />
+        {cities.map((city, index) => {
+          return <Card infoCity={city} key={index} />;
+        })}
       </ul>
     );
   }

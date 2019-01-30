@@ -29,7 +29,8 @@ class App extends Component {
               listCities.push({
                 nameCity: weather.title,
                 weatherState: mostUpdatedInfoCity.weather_state_name,
-                temperature: mostUpdatedInfoCity.the_temp
+                temperature: mostUpdatedInfoCity.the_temp,
+                icon: mostUpdatedInfoCity.weather_state_abbr
               });
               this.setState({
                 weatherCities: listCities
@@ -46,7 +47,6 @@ class App extends Component {
 
   render() {
     const { weatherCities, valueInput } = this.state;
-    console.log(weatherCities);
     return (
       <div>
         <h1>El tiempo de tu ciudad</h1>
@@ -55,7 +55,7 @@ class App extends Component {
           valueInput={valueInput}
           onChange={this.handleInput}
         />
-        <Cards />
+        <Cards cities={weatherCities} />
       </div>
     );
   }
