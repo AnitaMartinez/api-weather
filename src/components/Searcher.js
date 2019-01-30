@@ -1,17 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const SearchEngine = ({ onClick }) => {
+const Searcher = ({ onClick, onChange, valueInput }) => {
   return (
     <div>
       <input
         type="text"
-        value=""
         placeholder="Inserta el nombre de una ciudad"
+        value={valueInput}
+        onChange={onChange}
       />
       <button onClick={onClick}> Buscar </button>
     </div>
   );
 };
 
-export default SearchEngine;
+Searcher.propTypes = {
+  onClick: PropTypes.func,
+  valueInput: PropTypes.string
+};
+
+export default Searcher;
