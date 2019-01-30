@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const SearchEngine = () => {
+const SearchEngine = ({ onClick }) => {
   return (
     <div>
       <input
@@ -9,6 +9,7 @@ const SearchEngine = () => {
         value=""
         placeholder="Inserta el nombre de una ciudad"
       />
+      <button onClick={onClick}> Buscar </button>
     </div>
   );
 };
