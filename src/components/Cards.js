@@ -3,13 +3,31 @@ import Card from "./Card";
 
 class Cards extends Component {
   render() {
-    const { cities, stateWeatherFilter, minTempFilter } = this.props;
+    const {
+      cities,
+      stateWeatherFilter,
+      minTempFilter,
+      maxTempFilter
+    } = this.props;
+    console.log("stateWeatherFilter", stateWeatherFilter);
     console.log("minTempFilter", minTempFilter);
-    const filteredCities = cities.filter(city => {
-      return stateWeatherFilter === ""
-        ? city
-        : city.abbr === stateWeatherFilter;
-    });
+
+    const filteredCities = cities
+      .filter(city => {
+        return stateWeatherFilter === ""
+          ? city
+          : city.abbr === stateWeatherFilter;
+      })
+      .filter(city => {
+        return minTempFilter === ""
+          ? city
+          : city.temperature > Number(minTempFilter);
+      })
+      .filter(city => {
+        return maxTempFilter === ""
+          ? city
+          : city.temperature < Number(maxTempFilter);
+      });
 
     return (
       <ul>

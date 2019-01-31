@@ -57,6 +57,9 @@ class App extends Component {
       case "minTemp":
         this.setState({ tempMinInput: value });
         break;
+      case "maxTemp":
+        this.setState({ tempMaxInput: value });
+        break;
       default:
         break;
     }
@@ -68,7 +71,8 @@ class App extends Component {
       valueSerchInput,
       averageTemperature,
       valueWeatherSelector,
-      tempMinInput
+      tempMinInput,
+      tempMaxInput
     } = this.state;
     return (
       <div>
@@ -98,6 +102,7 @@ class App extends Component {
           cities={weatherCities}
           stateWeatherFilter={valueWeatherSelector}
           minTempFilter={tempMinInput}
+          maxTempFilter={tempMaxInput}
         />
       </div>
     );

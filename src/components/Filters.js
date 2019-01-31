@@ -9,13 +9,17 @@ const Filters = ({
   valueTempMinInput,
   valueTempMaxInput,
   typeWeather,
-  typeMinTemp
+  typeMinTemp,
+  typeMaxTemp
 }) => {
   const handleChangeSelector = (event, type) => {
     onChangeSelector(event.target.value, typeWeather);
   };
   const handleChangeMinTempInput = (event, type) => {
     onChangeMinTemInput(event.target.value, typeMinTemp);
+  };
+  const handleChangeMaxTempInput = (event, type) => {
+    onChangeMinTemInput(event.target.value, typeMaxTemp);
   };
   return (
     <div>
@@ -36,11 +40,19 @@ const Filters = ({
       </select>
 
       <h3>Filtra por temperatura:</h3>
-      <p>Filtrar por temperatura mínima:</p>
+      <p>Mostrar ciudades que tengan una temperatura mayor de:</p>
       <input
         type="number"
         value={valueTempMinInput}
         onChange={handleChangeMinTempInput}
+        placeholder="centígrados"
+      />
+      <p>Mostrar ciudades que tengan una temperatura menor de:</p>
+      <input
+        type="number"
+        value={valueTempMaxInput}
+        onChange={handleChangeMaxTempInput}
+        placeholder="centígrados"
       />
     </div>
   );
