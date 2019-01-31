@@ -3,6 +3,7 @@ import Searcher from "./components/Searcher";
 import Cards from "./components/Cards";
 import Selectors from "./components/Selectors";
 import { sumAndAverage } from "./utils";
+import { Api } from "./api";
 
 class App extends Component {
   constructor(props) {
@@ -13,42 +14,34 @@ class App extends Component {
       valueWeatherSelector: "",
       averageTemperature: ""
     };
-    this.fetchInfoWeather = this.fetchInfoWeather.bind(this);
+    this.getInfoWeather = this.getInfoWeather.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleWeatherSelector = this.handleWeatherSelector.bind(this);
   }
 
-  fetchInfoWeather() {
-    const URL = "https://www.metaweather.com/api/location";
+  getInfoWeather() {
     const listCities = [];
     const temperatureCities = [];
-
-    fetch(`${URL}/search/?query=${this.state.valueInput}`)
-      .then(response => response.json())
-      .then(cities => {
-        for (const city of cities) {
-          fetch(URL + "/" + city.woeid)
-            .then(response => response.json())
-            .then(weather => {
-              let mostUpdatedInfoCity = weather.consolidated_weather.slice(
-                -1
-              )[0];
-              listCities.push({
-                nameCity: weather.title,
-                weatherState: mostUpdatedInfoCity.weather_state_name,
-                temperature: mostUpdatedInfoCity.the_temp,
-                abbr: mostUpdatedInfoCity.weather_state_abbr
-              });
-              temperatureCities.push(mostUpdatedInfoCity.the_temp);
-              this.setState({
-                weatherCities: listCities,
-                averageTemperature: sumAndAverage(temperatureCities)
-              });
-            })
-            .catch(err => console.log(err));
-        }
-      })
-      .catch(err => console.log(err));
+    Api.getCitiesByName(this.state.valueInput).then(cities => {
+      for (const city of cities) {
+        Api.getWeatherByCity(city.woeid)
+          .then(weather => {
+            let mostUpdatedInfoCity = weather.consolidated_weather.slice(-1)[0];
+            listCities.push({
+              nameCity: weather.title,
+              weatherState: mostUpdatedInfoCity.weather_state_name,
+              temperature: mostUpdatedInfoCity.the_temp,
+              abbr: mostUpdatedInfoCity.weather_state_abbr
+            });
+            temperatureCities.push(mostUpdatedInfoCity.the_temp);
+            this.setState({
+              weatherCities: listCities,
+              averageTemperature: sumAndAverage(temperatureCities)
+            });
+          })
+          .catch(err => console.log(err));
+      }
+    });
   }
 
   handleInput = event => {
@@ -73,7 +66,7 @@ class App extends Component {
       <div>
         <h1>El tiempo de tu ciudad</h1>
         <Searcher
-          onClick={this.fetchInfoWeather}
+          onClick={this.getInfoWeather}
           valueInput={valueInput}
           onChange={this.handleInput}
         />

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Card = ({ infoCity }) => {
+  console.log("infoCity", infoCity);
   const { nameCity, weatherState, temperature, abbr } = infoCity;
   return (
     <li>

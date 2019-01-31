@@ -5,7 +5,7 @@ import { weatherStatesEnum } from "../utils";
 const Selectors = ({ onChange, valueSelector }) => {
   return (
     <select onChange={onChange} value={valueSelector}>
-      <option value="" selected>
+      <option value="" defaultValue>
         Filtra por tiempo
       </option>
       <option value={weatherStatesEnum.snow}>Nieve</option>
