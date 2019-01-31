@@ -72,7 +72,9 @@ class App extends Component {
     } = this.state;
     return (
       <div>
-        <h1>El tiempo de tu ciudad</h1>
+        <header className="header">
+          <h1>El tiempo de tu ciudad</h1>
+        </header>
         <Searcher
           onClick={this.getInfoWeather}
           valueInput={valueSerchInput}

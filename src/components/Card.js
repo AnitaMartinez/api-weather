@@ -4,14 +4,19 @@ import PropTypes from "prop-types";
 const Card = ({ infoCity }) => {
   const { nameCity, weatherState, temperature, abbr } = infoCity;
   return (
-    <li>
-      <h4>{nameCity}</h4>
-      <p>{weatherState}</p>
-      <img
-        src={`https://www.metaweather.com/static/img/weather/${abbr}.svg`}
-        alt={weatherState}
-      />
-      <p>{temperature}</p>
+    <li className="card">
+      <h4 className="title-card">{nameCity}</h4>
+      <div className="container-infoCard">
+        <img
+          src={`https://www.metaweather.com/static/img/weather/${abbr}.svg`}
+          alt={weatherState}
+          className="icon-weather"
+        />
+        <div>
+          <p>{weatherState}</p>
+          <p>{temperature}</p>
+        </div>
+      </div>
     </li>
   );
 };

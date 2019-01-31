@@ -42,7 +42,7 @@ class Cards extends Component {
             <p>{averageTemperature} centígrados</p>
           </div>
         )}
-        <ul>
+        <ul className="cards">
           {filteredCities.map((city, index) => {
             return <Card infoCity={city} key={index} />;
           })}

@@ -6,14 +6,17 @@ const Searcher = ({ onClick, onChange, valueInput, type }) => {
     onChange(event.target.value, type);
   };
   return (
-    <div>
+    <div className="container-searcher">
       <input
         type="text"
         placeholder="Inserta el nombre de una ciudad"
         value={valueInput}
         onChange={handleChangeInput}
+        className="searchInput"
       />
-      <button onClick={onClick}> Buscar </button>
+      <button className="btn-search" onClick={onClick}>
+        Buscar
+      </button>
     </div>
   );
 };
