@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import Searcher from "./components/Searcher";
 import Cards from "./components/Cards";
+import { sumAndAverage } from "./utils";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       weatherCities: [],
-      valueInput: ""
+      valueInput: "",
+      averageTemperature: ""
     };
     this.fetchInfoWeather = this.fetchInfoWeather.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -15,7 +17,9 @@ class App extends Component {
 
   fetchInfoWeather() {
     const URL = "https://www.metaweather.com/api/location";
-    let listCities = [];
+    const listCities = [];
+    const temperatureCities = [];
+
     fetch(`${URL}/search/?query=${this.state.valueInput}`)
       .then(response => response.json())
       .then(cities => {
@@ -32,8 +36,11 @@ class App extends Component {
                 temperature: mostUpdatedInfoCity.the_temp,
                 icon: mostUpdatedInfoCity.weather_state_abbr
               });
+              temperatureCities.push(mostUpdatedInfoCity.the_temp);
               this.setState({
-                weatherCities: listCities
+                weatherCities: listCities,
+                averageTemperature:
+                  temperatureCities.length && sumAndAverage(temperatureCities)
               });
             });
         }
@@ -46,7 +53,8 @@ class App extends Component {
   };
 
   render() {
-    const { weatherCities, valueInput } = this.state;
+    const { weatherCities, valueInput, averageTemperature } = this.state;
+
     return (
       <div>
         <h1>El tiempo de tu ciudad</h1>
@@ -55,6 +63,8 @@ class App extends Component {
           valueInput={valueInput}
           onChange={this.handleInput}
         />
+        <h2>Temperatura media: </h2>
+        <p>{averageTemperature} centígrados</p>
         <Cards cities={weatherCities} />
       </div>
     );
