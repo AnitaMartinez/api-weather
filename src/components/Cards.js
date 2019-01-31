@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Card from "./Card";
 import { sumAndAverage } from "../utils";
 
@@ -26,7 +27,6 @@ class Cards extends Component {
           ? city
           : city.temperature < Number(maxTempFilter);
       });
-
     let temperatures = [];
     for (const city of filteredCities) {
       temperatures.push(city.temperature);
@@ -51,5 +51,12 @@ class Cards extends Component {
     );
   }
 }
+
+Cards.propTypes = {
+  cities: PropTypes.array,
+  stateWeatherFilter: PropTypes.string,
+  minTempFilter: PropTypes.string,
+  maxTempFilter: PropTypes.string
+};
 
 export default Cards;

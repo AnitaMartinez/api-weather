@@ -23,7 +23,9 @@ const Searcher = ({ onClick, onChange, valueInput, type }) => {
 
 Searcher.propTypes = {
   onClick: PropTypes.func,
-  valueInput: PropTypes.string
+  onChange: PropTypes.func,
+  valueInput: PropTypes.string,
+  type: PropTypes.string
 };
 
 export default Searcher;

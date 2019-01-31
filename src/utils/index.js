@@ -18,3 +18,10 @@ export const weatherStatesEnum = {
   lighCloud: "lc",
   clear: "c"
 };
+
+export const typeInputsEnum = {
+  searcher: "searcher",
+  weather: "weather",
+  minTemp: "minTemp",
+  maxTemp: "maxTemp"
+};

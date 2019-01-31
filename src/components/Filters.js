@@ -3,23 +3,20 @@ import PropTypes from "prop-types";
 import { weatherStatesEnum } from "../utils";
 
 const Filters = ({
-  onChangeSelector,
-  onChangeMinTemInput,
+  onChange,
   valueWeatherSelector,
-  valueTempMinInput,
-  valueTempMaxInput,
   typeWeather,
   typeMinTemp,
   typeMaxTemp
 }) => {
   const handleChangeSelector = (event, type) => {
-    onChangeSelector(event.target.value, typeWeather);
+    onChange(event.target.value, typeWeather);
   };
   const handleChangeMinTempInput = (event, type) => {
-    onChangeMinTemInput(event.target.value, typeMinTemp);
+    onChange(event.target.value, typeMinTemp);
   };
   const handleChangeMaxTempInput = (event, type) => {
-    onChangeMinTemInput(event.target.value, typeMaxTemp);
+    onChange(event.target.value, typeMaxTemp);
   };
   return (
     <div className="container-filters">
@@ -39,7 +36,6 @@ const Filters = ({
         <option value={weatherStatesEnum.lighCloud}>Poco nuboso</option>
         <option value={weatherStatesEnum.clear}>Soleado</option>
       </select>
-
       <h4 className="txt-sm">Puedes filtrar por temperaturas:</h4>
       <div className="container-input-filter">
         <p className="txt-sm">
@@ -47,7 +43,6 @@ const Filters = ({
         </p>
         <input
           type="number"
-          value={valueTempMinInput}
           onChange={handleChangeMinTempInput}
           placeholder="°C"
           className="input-filter"
@@ -59,7 +54,6 @@ const Filters = ({
         </p>
         <input
           type="number"
-          value={valueTempMaxInput}
           onChange={handleChangeMaxTempInput}
           placeholder="°C"
           className="input-filter"
@@ -70,9 +64,11 @@ const Filters = ({
 };
 
 Filters.propTypes = {
-  onChangeSelector: PropTypes.func,
+  onChange: PropTypes.func,
   valueWeatherSelector: PropTypes.string,
-  valueTempMinInput: PropTypes.string
+  typeWeather: PropTypes.string,
+  typeMinTemp: PropTypes.string,
+  typeMaxTemp: PropTypes.string
 };
 
 export default Filters;

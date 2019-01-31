@@ -26,7 +26,7 @@ Card.defaultProps = {
 };
 
 Card.propTypes = {
-  infoCity: PropTypes.obj
+  infoCity: PropTypes.object
 };
 
 export default Card;
