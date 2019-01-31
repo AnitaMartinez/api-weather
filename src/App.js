@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Searcher from "./components/Searcher";
 import Cards from "./components/Cards";
 import Filters from "./components/Filters";
-import { sumAndAverage } from "./utils";
 import { Api } from "./api";
 
 class App extends Component {
@@ -10,7 +9,6 @@ class App extends Component {
     super(props);
     this.state = {
       weatherCities: [],
-      averageTemperature: "",
       valueSerchInput: "",
       valueWeatherSelector: "",
       tempMinInput: "",
@@ -36,8 +34,7 @@ class App extends Component {
             });
             temperatureCities.push(mostUpdatedInfoCity.the_temp);
             this.setState({
-              weatherCities: listCities,
-              averageTemperature: sumAndAverage(temperatureCities)
+              weatherCities: listCities
             });
             console.log(temperatureCities);
           })
@@ -69,7 +66,6 @@ class App extends Component {
     const {
       weatherCities,
       valueSerchInput,
-      averageTemperature,
       valueWeatherSelector,
       tempMinInput,
       tempMaxInput
@@ -92,12 +88,6 @@ class App extends Component {
           typeMinTemp={"minTemp"}
           typeMaxTemp={"maxTemp"}
         />
-        {averageTemperature.length > 0 && (
-          <div>
-            <h2>Temperatura media de las ciudades: </h2>
-            <p>{averageTemperature} centígrados</p>
-          </div>
-        )}
         <Cards
           cities={weatherCities}
           stateWeatherFilter={valueWeatherSelector}

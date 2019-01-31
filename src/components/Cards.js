@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Card from "./Card";
+import { sumAndAverage } from "../utils";
 
 class Cards extends Component {
   render() {
@@ -9,9 +10,6 @@ class Cards extends Component {
       minTempFilter,
       maxTempFilter
     } = this.props;
-    console.log("stateWeatherFilter", stateWeatherFilter);
-    console.log("minTempFilter", minTempFilter);
-
     const filteredCities = cities
       .filter(city => {
         return stateWeatherFilter === ""
@@ -29,12 +27,27 @@ class Cards extends Component {
           : city.temperature < Number(maxTempFilter);
       });
 
+    let temperatures = [];
+    for (const city of filteredCities) {
+      temperatures.push(city.temperature);
+    }
+    const averageTemperature =
+      temperatures.length > 0 ? sumAndAverage(temperatures) : [];
+
     return (
-      <ul>
-        {filteredCities.map((city, index) => {
-          return <Card infoCity={city} key={index} />;
-        })}
-      </ul>
+      <div>
+        {averageTemperature.length > 0 && (
+          <div>
+            <h2>Temperatura media de las ciudades: </h2>
+            <p>{averageTemperature} centígrados</p>
+          </div>
+        )}
+        <ul>
+          {filteredCities.map((city, index) => {
+            return <Card infoCity={city} key={index} />;
+          })}
+        </ul>
+      </div>
     );
   }
 }
