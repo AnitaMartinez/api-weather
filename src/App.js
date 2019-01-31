@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Searcher from "./components/Searcher";
 import Cards from "./components/Cards";
-import Selectors from "./components/Selectors";
+import Filters from "./components/Filters";
 import { sumAndAverage } from "./utils";
 import { Api } from "./api";
 
@@ -10,19 +10,20 @@ class App extends Component {
     super(props);
     this.state = {
       weatherCities: [],
-      valueInput: "",
+      averageTemperature: "",
+      valueSerchInput: "",
       valueWeatherSelector: "",
-      averageTemperature: ""
+      tempMinInput: "",
+      tempMaxInput: ""
     };
     this.getInfoWeather = this.getInfoWeather.bind(this);
-    this.handleInput = this.handleInput.bind(this);
-    this.handleWeatherSelector = this.handleWeatherSelector.bind(this);
+    this.handleInputs = this.handleInputs.bind(this);
   }
 
   getInfoWeather() {
     const listCities = [];
     const temperatureCities = [];
-    Api.getCitiesByName(this.state.valueInput).then(cities => {
+    Api.getCitiesByName(this.state.valueSerchInput).then(cities => {
       for (const city of cities) {
         Api.getWeatherByCity(city.woeid)
           .then(weather => {
@@ -38,41 +39,54 @@ class App extends Component {
               weatherCities: listCities,
               averageTemperature: sumAndAverage(temperatureCities)
             });
+            console.log(temperatureCities);
           })
           .catch(err => console.log(err));
       }
     });
   }
 
-  handleInput = event => {
-    this.setState({ valueInput: event.target.value });
-  };
-
-  handleWeatherSelector = event => {
-    this.setState({
-      valueWeatherSelector: event.target.value
-    });
+  handleInputs = (value, type) => {
+    switch (type) {
+      case "searcher":
+        this.setState({ valueSerchInput: value });
+        break;
+      case "weather":
+        this.setState({ valueWeatherSelector: value });
+        break;
+      case "minTemp":
+        this.setState({ tempMinInput: value });
+        break;
+      default:
+        break;
+    }
   };
 
   render() {
     const {
       weatherCities,
-      valueInput,
+      valueSerchInput,
       averageTemperature,
-      valueWeatherSelector
+      valueWeatherSelector,
+      tempMinInput
     } = this.state;
-    console.log(weatherCities);
     return (
       <div>
         <h1>El tiempo de tu ciudad</h1>
         <Searcher
           onClick={this.getInfoWeather}
-          valueInput={valueInput}
-          onChange={this.handleInput}
+          valueInput={valueSerchInput}
+          onChange={this.handleInputs}
+          type={"searcher"}
         />
-        <Selectors
-          onChange={this.handleWeatherSelector}
-          valueSelector={valueWeatherSelector}
+        <Filters
+          onChangeSelector={this.handleInputs}
+          valueWeatherSelector={valueWeatherSelector}
+          onChangeMinTemInput={this.handleInputs}
+          tempMinInput={tempMinInput}
+          typeWeather={"weather"}
+          typeMinTemp={"minTemp"}
+          typeMaxTemp={"maxTemp"}
         />
         {averageTemperature.length > 0 && (
           <div>
@@ -80,7 +94,11 @@ class App extends Component {
             <p>{averageTemperature} centígrados</p>
           </div>
         )}
-        <Cards cities={weatherCities} stateWeather={valueWeatherSelector} />
+        <Cards
+          cities={weatherCities}
+          stateWeatherFilter={valueWeatherSelector}
+          minTempFilter={tempMinInput}
+        />
       </div>
     );
   }
