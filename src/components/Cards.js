@@ -35,11 +35,11 @@ class Cards extends Component {
       temperatures.length > 0 ? sumAndAverage(temperatures) : [];
 
     return (
-      <div>
+      <div className="container-intro-cards">
         {averageTemperature.length > 0 && (
           <div>
-            <h2>Temperatura media de las ciudades: </h2>
-            <p>{averageTemperature} centígrados</p>
+            <h2 className="txt-sm">Temperatura media de las ciudades: </h2>
+            <p className="txt-sm">{averageTemperature} centígrados</p>
           </div>
         )}
         <ul className="cards">

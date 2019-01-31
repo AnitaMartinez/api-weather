@@ -22,10 +22,11 @@ const Filters = ({
     onChangeMinTemInput(event.target.value, typeMaxTemp);
   };
   return (
-    <div>
+    <div className="container-filters">
+      <h3 className="txt-sm">Puedes filtar por tiempo:</h3>
       <select onChange={handleChangeSelector} value={valueWeatherSelector}>
         <option value="" defaultValue>
-          Filtra por tiempo
+          Elige un estado
         </option>
         <option value={weatherStatesEnum.snow}>Nieve</option>
         <option value={weatherStatesEnum.sleet}>Aguanieve</option>
@@ -39,21 +40,31 @@ const Filters = ({
         <option value={weatherStatesEnum.clear}>Soleado</option>
       </select>
 
-      <h3>Filtra por temperatura:</h3>
-      <p>Mostrar ciudades que tengan una temperatura mayor de:</p>
-      <input
-        type="number"
-        value={valueTempMinInput}
-        onChange={handleChangeMinTempInput}
-        placeholder="centígrados"
-      />
-      <p>Mostrar ciudades que tengan una temperatura menor de:</p>
-      <input
-        type="number"
-        value={valueTempMaxInput}
-        onChange={handleChangeMaxTempInput}
-        placeholder="centígrados"
-      />
+      <h4 className="txt-sm">Puedes filtrar por temperaturas:</h4>
+      <div className="container-input-filter">
+        <p className="txt-sm">
+          Mostrar ciudades que tengan una temperatura mayor de:
+        </p>
+        <input
+          type="number"
+          value={valueTempMinInput}
+          onChange={handleChangeMinTempInput}
+          placeholder="°C"
+          className="input-filter"
+        />
+      </div>
+      <div className="container-input-filter">
+        <p className="txt-sm">
+          Mostrar ciudades que tengan una temperatura menor de:
+        </p>
+        <input
+          type="number"
+          value={valueTempMaxInput}
+          onChange={handleChangeMaxTempInput}
+          placeholder="°C"
+          className="input-filter"
+        />
+      </div>
     </div>
   );
 };

@@ -12,7 +12,7 @@ const Searcher = ({ onClick, onChange, valueInput, type }) => {
         placeholder="Inserta el nombre de una ciudad"
         value={valueInput}
         onChange={handleChangeInput}
-        className="searchInput"
+        className="input-search"
       />
       <button className="btn-search" onClick={onClick}>
         Buscar

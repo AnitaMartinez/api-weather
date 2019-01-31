@@ -5,7 +5,7 @@ const Card = ({ infoCity }) => {
   const { nameCity, weatherState, temperature, abbr } = infoCity;
   return (
     <li className="card">
-      <h4 className="title-card">{nameCity}</h4>
+      <h5 className="title-card">{nameCity}</h5>
       <div className="container-infoCard">
         <img
           src={`https://www.metaweather.com/static/img/weather/${abbr}.svg`}
