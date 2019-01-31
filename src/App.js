@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Searcher from "./components/Searcher";
 import Cards from "./components/Cards";
+import Selectors from "./components/Selectors";
 import { sumAndAverage } from "./utils";
 
 class App extends Component {
@@ -9,10 +10,12 @@ class App extends Component {
     this.state = {
       weatherCities: [],
       valueInput: "",
+      valueWeatherSelector: "",
       averageTemperature: ""
     };
     this.fetchInfoWeather = this.fetchInfoWeather.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleWeatherSelector = this.handleWeatherSelector.bind(this);
   }
 
   fetchInfoWeather() {
@@ -34,15 +37,15 @@ class App extends Component {
                 nameCity: weather.title,
                 weatherState: mostUpdatedInfoCity.weather_state_name,
                 temperature: mostUpdatedInfoCity.the_temp,
-                icon: mostUpdatedInfoCity.weather_state_abbr
+                abbr: mostUpdatedInfoCity.weather_state_abbr
               });
               temperatureCities.push(mostUpdatedInfoCity.the_temp);
               this.setState({
                 weatherCities: listCities,
-                averageTemperature:
-                  temperatureCities.length && sumAndAverage(temperatureCities)
+                averageTemperature: sumAndAverage(temperatureCities)
               });
-            });
+            })
+            .catch(err => console.log(err));
         }
       })
       .catch(err => console.log(err));
@@ -52,9 +55,20 @@ class App extends Component {
     this.setState({ valueInput: event.target.value });
   };
 
-  render() {
-    const { weatherCities, valueInput, averageTemperature } = this.state;
+  handleWeatherSelector = event => {
+    this.setState({
+      valueWeatherSelector: event.target.value
+    });
+  };
 
+  render() {
+    const {
+      weatherCities,
+      valueInput,
+      averageTemperature,
+      valueWeatherSelector
+    } = this.state;
+    console.log(weatherCities);
     return (
       <div>
         <h1>El tiempo de tu ciudad</h1>
@@ -63,9 +77,17 @@ class App extends Component {
           valueInput={valueInput}
           onChange={this.handleInput}
         />
-        <h2>Temperatura media: </h2>
-        <p>{averageTemperature} centígrados</p>
-        <Cards cities={weatherCities} />
+        <Selectors
+          onChange={this.handleWeatherSelector}
+          valueSelector={valueWeatherSelector}
+        />
+        {averageTemperature.length > 0 && (
+          <div>
+            <h2>Temperatura media de las ciudades: </h2>
+            <p>{averageTemperature} centígrados</p>
+          </div>
+        )}
+        <Cards cities={weatherCities} stateWeather={valueWeatherSelector} />
       </div>
     );
   }

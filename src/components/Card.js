@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Card = ({ infoCity }) => {
-  const { nameCity, weatherState, temperature, icon } = infoCity;
+  const { nameCity, weatherState, temperature, abbr } = infoCity;
   return (
     <li>
       <h3>{nameCity}</h3>
       <p>{weatherState}</p>
       <img
-        src={`https://www.metaweather.com/static/img/weather/${icon}.svg`}
+        src={`https://www.metaweather.com/static/img/weather/${abbr}.svg`}
         alt={weatherState}
       />
       <p>{temperature}</p>

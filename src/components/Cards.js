@@ -3,10 +3,15 @@ import Card from "./Card";
 
 class Cards extends Component {
   render() {
-    const { cities } = this.props;
+    const { cities, stateWeather } = this.props;
+    console.log("stateWeather", typeof stateWeather);
+    const filteredCities = cities.filter(city => {
+      return stateWeather === "" ? city : city.abbr === stateWeather;
+    });
+
     return (
       <ul>
-        {cities.map((city, index) => {
+        {filteredCities.map((city, index) => {
           return <Card infoCity={city} key={index} />;
         })}
       </ul>
